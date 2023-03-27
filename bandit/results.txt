@@ -1,0 +1,46 @@
+[main]  INFO    profile include tests: None
+[main]  INFO    profile exclude tests: None
+[main]  INFO    cli include tests: None
+[main]  INFO    cli exclude tests: None
+[main]  INFO    running on Python 3.10.6
+[node_visitor]  WARNING Unable to find qualified name for module: bandit_testing.py
+Run started:2023-03-27 14:53:24.881803
+
+Test results:
+>> Issue: [B106:hardcoded_password_funcarg] Possible hardcoded password: 'mypassword'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b106_hardcoded_password_funcarg.html
+   Location: bandit_testing.py:4:11
+3       def login(username, password):
+4           conn = psycopg2.connect(database="mydb", user="myuser", password="mypassword", host="localhost", port="5432")
+5           cur = conn.cursor()
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.7.5/plugins/b608_hardcoded_sql_expressions.html
+   Location: bandit_testing.py:6:12
+5           cur = conn.cursor()
+6           query = f"SELECT * FROM users WHERE username='{username}' AND password='{password}'"
+7           cur.execute(query)
+
+--------------------------------------------------
+
+Code scanned:
+        Total lines of code: 16
+        Total lines skipped (#nosec): 0
+
+Run metrics:
+        Total issues (by severity):
+                Undefined: 0
+                Low: 1
+                Medium: 1
+                High: 0
+        Total issues (by confidence):
+                Undefined: 0
+                Low: 1
+                Medium: 1
+                High: 0
+Files skipped (0):
