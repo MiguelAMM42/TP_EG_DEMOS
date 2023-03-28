@@ -1,0 +1,297 @@
+{
+	"kics_version": "v1.6.12",
+	"files_scanned": 4,
+	"lines_scanned": 31,
+	"files_parsed": 4,
+	"lines_parsed": 32,
+	"files_failed_to_scan": 0,
+	"queries_total": 1041,
+	"queries_failed_to_execute": 0,
+	"queries_failed_to_compute_similarity_id": 0,
+	"scan_id": "console",
+	"severity_counters": {
+		"HIGH": 4,
+		"INFO": 1,
+		"LOW": 2,
+		"MEDIUM": 3,
+		"TRACE": 0
+	},
+	"total_counter": 10,
+	"total_bom_resources": 0,
+	"start": "2023-03-27T15:33:41.625080103Z",
+	"end": "2023-03-27T15:34:16.645131653Z",
+	"paths": [
+		"/path"
+	],
+	"queries": [
+		{
+			"query_name": "S3 Bucket Allows Public Policy",
+			"query_id": "1a4bc881-9f69-4d44-8c9a-d37d08f54c50",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block",
+			"severity": "HIGH",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Access Control",
+			"description": "S3 bucket allows public policy",
+			"description_id": "a8924b3b",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "799b7dd56e600f0ae562ea505bd705c93a7222ab26e19a4bbae03c73c416d264",
+					"line": 7,
+					"resource_type": "aws_s3_bucket_public_access_block",
+					"resource_name": "publicaccess",
+					"issue_type": "IncorrectValue",
+					"search_key": "aws_s3_bucket_public_access_block[publicaccess].block_public_policy",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'block_public_policy' should equal 'true'",
+					"actual_value": "'block_public_policy' is equal 'false'"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket SSE Disabled",
+			"query_id": "6726dcc0-5ff5-459d-b473-a780bef7665c",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#server_side_encryption_configuration",
+			"severity": "HIGH",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Encryption",
+			"description": "If algorithm is AES256 then the master key is null, empty or undefined, otherwise the master key is required",
+			"description_id": "b386c506",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "b08a200b838d93d496eeb88249a78848a6a7846f1ac1cbf27367d821aefa726b",
+					"line": 11,
+					"resource_type": "aws_s3_bucket",
+					"resource_name": "terraformdemobucket",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket[demobucket]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'aws_s3_bucket' to have 'server_side_encryption_configuration' associated",
+					"actual_value": "'aws_s3_bucket' does not have 'server_side_encryption_configuration' associated"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Without Enabled MFA Delete",
+			"query_id": "c5b31ab9-0f26-4a49-b8aa-4cc064392f4d",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#mfa_delete",
+			"severity": "HIGH",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Insecure Configurations",
+			"description": "S3 bucket without MFA Delete Enabled. MFA delete cannot be enabled through Terraform, it can be done by adding a MFA device (https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable.html) and enabling versioning and MFA delete by using AWS CLI: 'aws s3api put-bucket-versioning --versioning-configuration=Status=Enabled,MFADelete=Enabled --bucket=\u003cBUCKET_NAME\u003e --mfa=\u003cMFA_SERIAL_NUMBER\u003e'. Please, also notice that MFA delete can not be used with lifecycle configurations",
+			"description_id": "e1699d08",
+			"cis_description_id": "CIS Security - CIS Amazon Web Services Foundations Benchmark v1.4.0 - Rule 2.1.3",
+			"cis_description_title": "Ensure MFA Delete is enable on S3 buckets",
+			"cis_description_text": "Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.\nAdding MFA delete to an S3 bucket, requires additional authentication when you change the version state of your bucket or you delete and object version adding another layer of security in the event your security credentials are compromised or unauthorized access is granted.",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "c08f7c6592851c787a4a5c8bd1410db8fb729f940d8c86a569202b0e10a48511",
+					"line": 11,
+					"resource_type": "aws_s3_bucket",
+					"resource_name": "terraformdemobucket",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket[demobucket]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "versioning should be defined and not null",
+					"actual_value": "versioning is undefined or null"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Without Restriction Of Public Bucket",
+			"query_id": "1ec253ab-c220-4d63-b2de-5b40e0af9293",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block",
+			"severity": "HIGH",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Insecure Configurations",
+			"description": "S3 bucket without restriction of public bucket",
+			"description_id": "a6e86c32",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "e81247265593ed8a4a5365f10b0b6829c68ccde1a1d8dd0d639ae9b5528832f7",
+					"line": 4,
+					"resource_type": "aws_s3_bucket_public_access_block",
+					"resource_name": "publicaccess",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket_public_access_block[publicaccess].restrict_public_buckets",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'restrict_public_buckets' should equal 'true'",
+					"actual_value": "'restrict_public_buckets' is missing",
+					"remediation": "restrict_public_buckets = true",
+					"remediation_type": "addition"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Allows Public ACL",
+			"query_id": "d0cc8694-fcad-43ff-ac86-32331d7e867f",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block",
+			"severity": "MEDIUM",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Access Control",
+			"description": "S3 bucket allows public ACL",
+			"description_id": "7b8886c1",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "dd087f6e91173aba86a72abc937bcf41b3e68fd746cfce23aaa98dda3d61d6c5",
+					"line": 6,
+					"resource_type": "aws_s3_bucket_public_access_block",
+					"resource_name": "publicaccess",
+					"issue_type": "IncorrectValue",
+					"search_key": "aws_s3_bucket_public_access_block[publicaccess].block_public_acls",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'block_public_acls' should equal 'true'",
+					"actual_value": "'block_public_acls' is equal 'false'",
+					"remediation": "{\"after\":\"true\",\"before\":\"false\"}",
+					"remediation_type": "replacement"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Logging Disabled",
+			"query_id": "f861041c-8c9f-4156-acfc-5e6e524f5884",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket",
+			"severity": "MEDIUM",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Observability",
+			"description": "Server Access Logging should be enabled on S3 Buckets so that all changes are logged and trackable",
+			"description_id": "fa5c7c72",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "fbbd4651be27d9e507d54a9afd8898609afe9b57aae78a6fee1d1c563582a9f3",
+					"line": 11,
+					"resource_type": "aws_s3_bucket",
+					"resource_name": "terraformdemobucket",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket[demobucket]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'logging' should be defined and not null",
+					"actual_value": "'logging' is undefined or null"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Without Versioning",
+			"query_id": "568a4d22-3517-44a6-a7ad-6a7eed88722c",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket#versioning",
+			"severity": "MEDIUM",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Observability",
+			"description": "S3 bucket should have versioning enabled",
+			"description_id": "7614ce3b",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "13010c46696acd2aab4a30c74f5d14a0b5348ec4faf0135fce9426ed5b01b2f6",
+					"line": 11,
+					"resource_type": "aws_s3_bucket",
+					"resource_name": "terraformdemobucket",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket[demobucket]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'versioning' should be true",
+					"actual_value": "'versioning' is undefined or null"
+				}
+			]
+		},
+		{
+			"query_name": "IAM Access Analyzer Not Enabled",
+			"query_id": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/accessanalyzer_analyzer",
+			"severity": "LOW",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Best Practices",
+			"description": "IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions",
+			"description_id": "d03e85ae",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "0a7d0464de505a54720d6002d14a22a32e6b20bb8189d444ab621d8ab838304f",
+					"line": 4,
+					"resource_type": "n/a",
+					"resource_name": "n/a",
+					"issue_type": "MissingAttribute",
+					"search_key": "resource",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'aws_accessanalyzer_analyzer' should be set",
+					"actual_value": "'aws_accessanalyzer_analyzer' is undefined"
+				}
+			]
+		},
+		{
+			"query_name": "S3 Bucket Without Ignore Public ACL",
+			"query_id": "4fa66806-0dd9-4f8d-9480-3174d39c7c91",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block",
+			"severity": "LOW",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Insecure Configurations",
+			"description": "S3 bucket without ignore public ACL",
+			"description_id": "28aa7150",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "d7997892bb54ffe4409eba7503a7778bfb391c5ab0800116a639ecbb5e1e5915",
+					"line": 4,
+					"resource_type": "aws_s3_bucket_public_access_block",
+					"resource_name": "publicaccess",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket_public_access_block[publicaccess]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "'ignore_public_acls' should equal 'true'",
+					"actual_value": "'ignore_public_acls' is missing",
+					"remediation": "ignore_public_acls = true",
+					"remediation_type": "addition"
+				}
+			]
+		},
+		{
+			"query_name": "Resource Not Using Tags",
+			"query_id": "e38a8e0a-b88b-4902-b3fe-b0fcb17d5c10",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/guides/resource-tagging",
+			"severity": "INFO",
+			"platform": "Terraform",
+			"cloud_provider": "AWS",
+			"category": "Best Practices",
+			"description": "AWS services resource tags are an essential part of managing components. As a best practice, the field 'tags' should have additional tags defined other than 'Name'",
+			"description_id": "09db2d52",
+			"files": [
+				{
+					"file_name": "../../path/main.tf",
+					"similarity_id": "412cd735f1f6c26638b0e352f3204ddd83a0e26f368e97a285d9f60346697bfd",
+					"line": 11,
+					"resource_type": "aws_s3_bucket",
+					"resource_name": "demobucket",
+					"issue_type": "MissingAttribute",
+					"search_key": "aws_s3_bucket[{{demobucket}}]",
+					"search_line": 0,
+					"search_value": "",
+					"expected_value": "aws_s3_bucket[{{demobucket}}].tags should be defined and not null",
+					"actual_value": "aws_s3_bucket[{{demobucket}}].tags is undefined or null"
+				}
+			]
+		}
+	]
+}
