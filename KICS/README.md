@@ -13,4 +13,4 @@ docker run -t -v "{path_to_host_folder_to_scan}":/path checkmarx/kics scan -p /p
 sudo docker run -t -v ./KICS:/path checkmarx/kics:latest scan -p /path -o "/path/"
 ```
 
-- Os resultados foram gerados no ficheiro `result.js` 
+- Os resultados foram gerados no ficheiro `result.json` 
